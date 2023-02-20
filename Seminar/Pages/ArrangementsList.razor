@@ -1,0 +1,54 @@
+﻿@attribute [Authorize]
+@page "/Arrangements/List"
+@using Seminar.Data
+@using Seminar.Models
+
+@inject ApplicationDbContext DbContext
+
+<h2>Popis aranžmana</h2>
+<a href="/arrangeements/insert" class="linkbutton">Dodaj</a>
+
+<br />
+<br />
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Id</th>
+        <th>Ime</th>
+        <th>Tip</th>
+        <th>Kolićina</th>
+        <th>Umjetan</th>
+        <th>Opis</th>
+        <th>Cijena</th>
+        <th colspan="2">Actions</th>
+    </tr>
+    @foreach (var item in Arrangements)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>@item.Type</td>
+            <td>@item.Quantity</td>
+            <td>@item.Arificial</td>
+            <td>@item.Description</td>
+            <td>@item.Price</td>
+            <td>
+                <a href="/arrangements/update/@item.Id" class="linkbutton">Izmijeni</a>
+            </td>
+            <td>
+                <a href="/arrangements/delete/@item.Id" class="linkbutton">Obriši</a>
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+
+@code {
+    List<FlowerArrangement> Arrangements;
+
+    protected override void OnInitialized()
+    {
+        Arrangements = DbContext.FlowerArrangements.ToList();
+    }
+}

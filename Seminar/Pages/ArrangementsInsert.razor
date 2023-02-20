@@ -1,0 +1,108 @@
+﻿@attribute [Authorize]
+@page "/Arrangements/Insert"
+@using Seminar.Data
+@using Seminar.Enums
+@using Seminar.Models
+@inject ApplicationDbContext DbContext
+
+
+<h2>Unos novog aranžmana</h2>
+<h3 class="message">@Message</h3>
+
+<EditForm Model="ArrangementModel" OnValidSubmit="OnSaveClick">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+
+    <table border="0" cellpadding="10">
+        <tr>
+            <td class="right">
+                <label for="Name">Ime</label>
+            </td>
+            <td>
+                <InputText id="Name" @bind-Value="ArrangementModel.Name"></InputText>
+                <ValidationMessage For="(() => ArrangementModel.Name)"></ValidationMessage>
+            </td>
+        </tr>
+        <tr>
+            <td class="right">
+                <label for="Type">Tip</label>
+            </td>
+            <td>
+                <InputSelect id="Type" @bind-Value="ArrangementModel.Type">
+                    <option value="">Odaberi tip...</option>
+                    @foreach (var type in Enum.GetValues(typeof(ArrangementTypes)))
+                    {
+                        <option value="@type">@type</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="(() => ArrangementModel.Type)"></ValidationMessage>
+            </td>
+        </tr>
+        <tr>
+            <td class="right">
+                <label for="Quantity">Kolićina</label>
+            </td>
+            <td>
+                <InputNumber id="Quantity" @bind-Value="ArrangementModel.Quantity"></InputNumber>
+                <ValidationMessage For="(() => ArrangementModel.Quantity)"></ValidationMessage>
+            </td>
+        </tr>
+        <tr>
+            <td class="right">
+                <label for="Artificial">Umjetan</label>
+            </td>
+            <td>
+                <InputSelect id="Artificial" @bind-Value="ArrangementModel.Arificial">
+                    <option value="">Odaberi vrstu...</option>
+                    @foreach (var artificial in Enum.GetValues(typeof(Artificial)))
+                    {
+                        <option value="@artificial">@artificial</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="(() => ArrangementModel.Arificial)"></ValidationMessage>
+            </td>
+        </tr>
+        <tr>
+            <td class="right">
+                <label for="Description">Opis</label>
+            </td>
+            <td>
+                <InputTextArea id="Description" @bind-Value="ArrangementModel.Description"></InputTextArea>
+                <ValidationMessage For="(() => ArrangementModel.Description)"></ValidationMessage>
+            </td>
+        </tr>
+        <tr>
+            <td class="right">
+                <label for="Price">Cijena</label>
+            </td>
+            <td>
+                <InputNumber id="Price" @bind-Value="ArrangementModel.Price"></InputNumber>
+                <ValidationMessage For="(() => ArrangementModel.Price)"></ValidationMessage>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><button type="submit">Spremi</button></td>
+        </tr>
+    </table>
+</EditForm>
+
+<br />
+<br />
+<a href="/arrangements/list">Natrag na listu aranžmana</a>
+
+
+@code {
+    FlowerArrangement ArrangementModel { get; set; }
+    string Message { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ArrangementModel = new FlowerArrangement();
+    }
+
+    private void OnSaveClick()
+    {
+        DbContext.Add(ArrangementModel);
+        DbContext.SaveChanges();
+        Message = "Aranžman uspješno spremljen";
+    }
+}

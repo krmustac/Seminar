@@ -1,0 +1,71 @@
+﻿@attribute [Authorize]
+@page "/Arrangements/Delete/{ArrangementID:int}"
+@using Seminar.Data
+@using Seminar.Models
+
+@inject ApplicationDbContext DbContext
+@inject NavigationManager UriHelper
+
+
+<h2>Brisanje aranžmana</h2>
+
+<form>
+    <table border="0">
+        <tr>
+            <td class="right"><label>Ime</label></td>
+            <td>@ArrangementModel.Name</td>
+        </tr>
+        <tr>
+            <td class="right"><label>Tip</label></td>
+            <td>@ArrangementModel.Type</td>
+        </tr>
+        <tr>
+            <td class="right"><label>Kolićina</label></td>
+            <td>@ArrangementModel.Quantity</td>
+        </tr>
+        <tr>
+            <td class="right"><label>Umjetan</label></td>
+            <td>@ArrangementModel.Arificial</td>
+        </tr>
+        <tr>
+            <td class="right"><label>Opis</label></td>
+            <td>@ArrangementModel.Description</td>
+        </tr>
+        <tr>
+            <td class="right"><label>Cijena</label></td>
+            <td>@ArrangementModel.Price</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="button" @onclick="OnDeleteClick">Obriši</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<br />
+<br />
+<a href="/arrangements/list">Natrag na listu aranžmana</a>
+
+
+
+@code {
+    [Parameter]
+    public int ArrangementID { get; set; }
+
+    FlowerArrangement ArrangementModel { get; set; }
+    string Message { get; set; }
+
+    protected override void OnInitialized()
+    {
+        ArrangementModel = DbContext.FlowerArrangements.Find(ArrangementID);
+    }
+
+    private void OnDeleteClick()
+    {
+        DbContext.FlowerArrangements.Remove(ArrangementModel);
+        DbContext.SaveChanges();
+        UriHelper.NavigateTo($"/arrangements/list");
+        
+    }
+}

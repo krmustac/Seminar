@@ -1,0 +1,71 @@
+﻿@attribute [Authorize]
+@page "/Plants/Delete/{PlantID:int}"
+@using Seminar.Data
+@using Seminar.Models
+
+@inject ApplicationDbContext DbContext
+@inject NavigationManager UriHelper
+
+
+<h2>Brisanje biljke</h2>
+
+<form>
+    <table border="0">
+        <tr>
+            <td class="right"><label>Ime</label></td>
+            <td>@PlantModel.Name</td>
+        </tr>
+        <tr>
+            <td class="right"><label>Tip</label></td>
+            <td>@PlantModel.Type</td>
+        </tr>
+        <tr>
+            <td class="right"><label>Boja</label></td>
+            <td>@PlantModel.Color</td>
+        </tr>
+        <tr>
+            <td class="right"><label>Kolićina</label></td>
+            <td>@PlantModel.Quantity</td>
+        </tr>
+        <tr>
+            <td class="right"><label>Opis</label></td>
+            <td>@PlantModel.Description</td>
+        </tr>
+        <tr>
+            <td class="right"><label>Cijena</label></td>
+            <td>@PlantModel.Price</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="button" @onclick="OnDeleteClick">Obriši</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<br />
+<br />
+<a href="/plants/list">Natrag na listu biljaka</a>
+
+
+
+@code {
+    [Parameter]
+    public int PlantID { get; set; }
+
+    Plant PlantModel { get; set; }
+    string Message { get; set; }
+
+    protected override void OnInitialized()
+    {
+        PlantModel = DbContext.Plants.Find(PlantID);
+    }
+
+    private void OnDeleteClick()
+    {
+        DbContext.Plants.Remove(PlantModel);
+        DbContext.SaveChanges();
+        UriHelper.NavigateTo($"/plants/list");
+        
+    }
+}

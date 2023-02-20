@@ -1,0 +1,58 @@
+﻿@attribute [Authorize]
+@page "/Decorations/List"
+@using Seminar.Data
+@using Seminar.Models
+
+@inject ApplicationDbContext DbContext
+
+<h2>Popis dekoracija</h2>
+<a href="/decorations/insert" class="linkbutton">Dodaj</a>
+
+<br />
+<br />
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Id</th>
+        <th>Ime</th>
+        <th>Tip</th>
+        <th>Boja</th>
+        <th>Kolićina</th>
+        <th>Kolićina u paketu</th>
+        <th>Materijal</th>
+        <th>Opis</th>
+        <th>Cijena</th>
+        <th colspan="2">Actions</th>
+    </tr>
+    @foreach (var item in Decorations)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>@item.Type</td>
+            <td>@item.Color</td>
+            <td>@item.Quantity</td>
+            <td>@item.PackageSize</td>
+            <td>@item.Material</td>
+            <td>@item.Description</td>
+            <td>@item.Price</td>
+            <td>
+                <a href="/decorations/update/@item.Id" class="linkbutton">Izmijeni</a>
+            </td>
+            <td>
+                <a href="/decorations/delete/@item.Id" class="linkbutton">Obriši</a>
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+
+@code {
+    List<Decoration> Decorations;
+
+    protected override void OnInitialized()
+    {
+        Decorations = DbContext.Decorations.ToList();
+    }
+}

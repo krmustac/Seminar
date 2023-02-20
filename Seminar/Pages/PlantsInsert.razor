@@ -1,0 +1,108 @@
+﻿@attribute [Authorize]
+@page "/Plants/Insert"
+@using Seminar.Data
+@using Seminar.Enums
+@using Seminar.Models
+@inject ApplicationDbContext DbContext
+
+
+<h2>Unos nove biljke</h2>
+<h3 class="message">@Message</h3>
+
+<EditForm Model="PlantModel" OnValidSubmit="OnSaveClick">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+
+    <table border="0" cellpadding="10">
+        <tr>
+            <td class="right">
+                <label for="Name">Ime</label>
+            </td>
+            <td>
+                <InputText id="Name" @bind-Value="PlantModel.Name"></InputText>
+                <ValidationMessage For="(() => PlantModel.Name)"></ValidationMessage>
+            </td>
+        </tr>
+        <tr>
+            <td class="right">
+                <label for="Type">Tip</label>
+            </td>
+            <td>
+                <InputSelect id="Type" @bind-Value="PlantModel.Type">
+                    <option value="">Odaberi tip...</option>
+                    @foreach (var type in Enum.GetValues(typeof(PlantTypes)))
+                    {
+                        <option value="@type">@type</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="(() => PlantModel.Type)"></ValidationMessage>
+            </td>
+        </tr>
+        <tr>
+            <td class="right">
+                <label for="Color">Boja</label>
+            </td>
+            <td>
+                <InputSelect id="Color" @bind-Value="PlantModel.Color">
+                    <option value="">Odaberi boju...</option>
+                    @foreach (var color in Enum.GetValues(typeof(Colors)))
+                    {
+                        <option value="@color">@color</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="(() => PlantModel.Color)"></ValidationMessage>
+            </td>
+        </tr>
+        <tr>
+            <td class="right">
+                <label for="Quantity">Kolićina</label>
+            </td>
+            <td>
+                <InputNumber id="Quantity" @bind-Value="PlantModel.Quantity"></InputNumber>
+                <ValidationMessage For="(() => PlantModel.Quantity)"></ValidationMessage>
+            </td>
+        </tr>
+        <tr>
+            <td class="right">
+                <label for="Description">Opis</label>
+            </td>
+            <td>
+                <InputTextArea id="Description" @bind-Value="PlantModel.Description"></InputTextArea>
+                <ValidationMessage For="(() => PlantModel.Description)"></ValidationMessage>
+            </td>
+        </tr>
+        <tr>
+            <td class="right">
+                <label for="Price">Cijena</label>
+            </td>
+            <td>
+                <InputNumber id="Price" @bind-Value="PlantModel.Price"></InputNumber>
+                <ValidationMessage For="(() => PlantModel.Price)"></ValidationMessage>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><button type="submit">Spremi</button></td>
+        </tr>
+    </table>
+</EditForm>
+
+<br />
+<br />
+<a href="/plants/list">Natrag na listu biljaka</a>
+
+
+@code {
+    Plant PlantModel { get; set; }
+    string Message { get; set; }
+
+    protected override void OnInitialized()
+    {
+        PlantModel = new Plant();
+    }
+
+    private void OnSaveClick()
+    {
+        DbContext.Add(PlantModel);
+        DbContext.SaveChanges();
+        Message = "Biljka uspješno spremljena";
+    }
+}

@@ -1,0 +1,79 @@
+﻿@attribute [Authorize]
+@page "/Decorations/Delete/{DecorationID:int}"
+@using Seminar.Data
+@using Seminar.Models
+
+@inject ApplicationDbContext DbContext
+@inject NavigationManager UriHelper
+
+
+<h2>Brisanje dekoracije</h2>
+
+<form>
+    <table border="0">
+        <tr>
+            <td class="right"><label>Ime</label></td>
+            <td>@DecorationModel.Name</td>
+        </tr>
+        <tr>
+            <td class="right"><label>Tip</label></td>
+            <td>@DecorationModel.Type</td>
+        </tr>
+        <tr>
+            <td class="right"><label>Boja</label></td>
+            <td>@DecorationModel.Color</td>
+        </tr>
+        <tr>
+            <td class="right"><label>Kolićina</label></td>
+            <td>@DecorationModel.Quantity</td>
+        </tr>
+        <tr>
+            <td class="right"><label>Kolićina u paketu</label></td>
+            <td>@DecorationModel.PackageSize</td>
+        </tr>
+        <tr>
+            <td class="right"><label>Materijal</label></td>
+            <td>@DecorationModel.Material</td>
+        </tr>
+        <tr>
+            <td class="right"><label>Opis</label></td>
+            <td>@DecorationModel.Description</td>
+        </tr>
+        <tr>
+            <td class="right"><label>Cijena</label></td>
+            <td>@DecorationModel.Price</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="button" @onclick="OnDeleteClick">Obriši</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<br />
+<br />
+<a href="/decorations/list">Natrag na listu dekoracija</a>
+
+
+
+@code {
+    [Parameter]
+    public int DecorationID { get; set; }
+
+    Decoration DecorationModel { get; set; }
+    string Message { get; set; }
+
+    protected override void OnInitialized()
+    {
+        DecorationModel = DbContext.Decorations.Find(DecorationID);
+    }
+
+    private void OnDeleteClick()
+    {
+        DbContext.Decorations.Remove(DecorationModel);
+        DbContext.SaveChanges();
+        UriHelper.NavigateTo($"/decorations/list");
+        
+    }
+}
