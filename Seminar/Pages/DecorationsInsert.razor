@@ -4,6 +4,7 @@
 @using Seminar.Enums
 @using Seminar.Models
 @inject ApplicationDbContext DbContext
+@inject NavigationManager UriHelper
 
 
 <h2>Unos nove dekoracije</h2>
@@ -127,6 +128,6 @@
     {
         DbContext.Add(DecorationModel);
         DbContext.SaveChanges();
-        Message = "Dekoracija uspješno spremljena";
+        UriHelper.NavigateTo($"/decorations/insert",forceLoad:true);
     }
 }

@@ -65,7 +65,6 @@
     {
         DbContext.FlowerArrangements.Remove(ArrangementModel);
         DbContext.SaveChanges();
-        UriHelper.NavigateTo($"/arrangements/list");
-        
+        UriHelper.NavigateTo($"/arrangements/list");       
     }
 }

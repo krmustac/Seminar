@@ -4,6 +4,7 @@
 @using Seminar.Enums
 @using Seminar.Models
 @inject ApplicationDbContext DbContext
+@inject NavigationManager UriHelper
 
 
 <h2>Unos novog aranžmana</h2>
@@ -103,6 +104,6 @@
     {
         DbContext.Add(ArrangementModel);
         DbContext.SaveChanges();
-        Message = "Aranžman uspješno spremljen";
+        UriHelper.NavigateTo($"/arrangements/insert",forceLoad:true);
     }
 }

@@ -14,7 +14,7 @@ namespace Seminar.Models
         public string Name { get; set; }
 
         [Display(Name = "Opis")]
-        [StringLength (500, ErrorMessage ="* Opis je predugačak")]
+        [StringLength (250, ErrorMessage ="* Opis je predugačak")]
         public string Description { get; set; }
 
         [Required(ErrorMessage = "* Tip je obavezan")]

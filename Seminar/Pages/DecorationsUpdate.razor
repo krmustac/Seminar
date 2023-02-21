@@ -27,7 +27,7 @@
             </td>
             <td>
                 <InputSelect id="Type" @bind-Value="DecorationModel.Type">
-                    @foreach (var type in Enum.GetValues(typeof(PlantTypes)))
+                    @foreach (var type in Enum.GetValues(typeof(DecotrationTypes)))
                     {
                         <option value="@type">@type</option>
                     }

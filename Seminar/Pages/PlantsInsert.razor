@@ -4,6 +4,7 @@
 @using Seminar.Enums
 @using Seminar.Models
 @inject ApplicationDbContext DbContext
+@inject NavigationManager UriHelper
 
 
 <h2>Unos nove biljke</h2>
@@ -103,6 +104,6 @@
     {
         DbContext.Add(PlantModel);
         DbContext.SaveChanges();
-        Message = "Biljka uspješno spremljena";
+        UriHelper.NavigateTo($"/plants/insert",forceLoad:true);
     }
 }
