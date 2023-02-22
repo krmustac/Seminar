@@ -2,7 +2,9 @@
 @page "/Arrangements/List"
 @using Seminar.Data
 @using Seminar.Models
+@inject NavigationManager uriHelper
 
+@using System.Threading
 @inject ApplicationDbContext DbContext
 
 <h2>Popis aranžmana</h2>
@@ -54,6 +56,16 @@
     protected override void OnInitialized()
     {
         Arrangements = DbContext.FlowerArrangements.ToList();
+    }
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var timer = new Timer(new TimerCallback(_ =>
+            {
+                uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+            }), null, 5000, Timeout.Infinite);
+        }
     }
 
     private String calculateTax(float price)
