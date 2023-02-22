@@ -1,5 +1,7 @@
 Seminar "Flowershop inventory management"
 
+Blazor server aplikacija za upravljanje inventarom cvječarne
+
 Korištene tehnologije:
 - Blazor(C#)
 - HTML
