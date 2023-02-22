@@ -18,7 +18,9 @@
         <th>Boja</th>
         <th>Kolićina</th>
         <th>Opis</th>
-        <th>Cijena</th>
+        <th>Cijena(€)</th>
+        <th>PDV(€)</th>
+        <th>Cijena + PDV(€)</th>
         <th colspan="2">Actions</th>
     </tr>
     @foreach (var item in Plants)
@@ -30,7 +32,9 @@
             <td>@item.Color</td>
             <td>@item.Quantity</td>
             <td>@item.Description</td>
-            <td>@item.Price</td>
+            <td>@item.Price.ToString("n2")€</td>
+            <td>@calculateTax(@item.Price)€</td>
+            <td>@calculateTaxedPrice(@item.Price)€</td>
             <td>
                 <a href="/plants/update/@item.Id" class="linkbutton">Izmijeni</a>
             </td>
@@ -50,5 +54,15 @@
     protected override void OnInitialized()
     {
         Plants = DbContext.Plants.ToList();
+    }
+    private String calculateTax(float price)
+    {
+        float total = price * 0.25f;
+        return total.ToString("n2");
+    }
+    private String calculateTaxedPrice(float price)
+    {
+        float total = price * 1.25f; 
+         return total.ToString("n2");
     }
 }

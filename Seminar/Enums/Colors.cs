@@ -8,6 +8,11 @@
         Ljubičasta,
         Narančasta,
         Bijela,
+        Crna,
+        Siva,
+        Zlatna,
+        Srebrna,
+        Zelena,
         Miješana,
         Drugo
     }

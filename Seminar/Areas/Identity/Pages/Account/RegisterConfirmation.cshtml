@@ -1,0 +1,21 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Potvrdi email";
+}
+
+<h1>@ViewData["Title"]</h1>
+@{
+    if (@Model.DisplayConfirmAccountLink)
+    {
+<p>
+    Ovaj link bi inaće bio poslan na vaš mail, ali budući da aplikacija ne šalje mailove samo kliknite link: <a id="confirm-link" style="color:#26c237" href="@Model.EmailConfirmationUrl">Klikni ovdje za potvrdu maila</a>
+</p>
+    }
+    else
+    {
+<p>
+        Please check your email to confirm your account.
+</p>
+    }
+}

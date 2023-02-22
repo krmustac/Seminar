@@ -18,7 +18,9 @@
         <th>Kolićina</th>
         <th>Umjetan</th>
         <th>Opis</th>
-        <th>Cijena</th>
+        <th>Cijena(€)</th>
+        <th>PDV(€)</th>
+        <th>Cijena + PDV(€)</th>
         <th colspan="2">Actions</th>
     </tr>
     @foreach (var item in Arrangements)
@@ -30,7 +32,9 @@
             <td>@item.Quantity</td>
             <td>@item.Arificial</td>
             <td>@item.Description</td>
-            <td>@item.Price</td>
+            <td>@item.Price.ToString("n2")€</td>
+            <td>@calculateTax(@item.Price)€</td>
+            <td>@calculateTaxedPrice(@item.Price)€</td>
             <td>
                 <a href="/arrangements/update/@item.Id" class="linkbutton">Izmijeni</a>
             </td>
@@ -50,5 +54,16 @@
     protected override void OnInitialized()
     {
         Arrangements = DbContext.FlowerArrangements.ToList();
+    }
+
+    private String calculateTax(float price)
+    {
+        float total = price * 0.25f;
+        return total.ToString("n2");
+    }
+    private String calculateTaxedPrice(float price)
+    {
+        float total = price * 1.25f; 
+         return total.ToString("n2");
     }
 }
