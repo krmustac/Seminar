@@ -24,7 +24,7 @@ namespace Seminar.Models
 
         [Required(ErrorMessage ="* Kolićina je obavezna")]
         [Display(Name = "Kolićina")]
-        [Range(0, int.MaxValue, ErrorMessage = "* Potrebno je upisat valjanu vrijednost kolićine")]
+        [Range(0, int.MaxValue, ErrorMessage = "* Potrebno je upisati valjanu vrijednost kolićine")]
         public int Quantity { get; set; }
 
         [Required(ErrorMessage ="* Umjetan je obavezan")]

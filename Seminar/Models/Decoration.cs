@@ -27,12 +27,12 @@ namespace Seminar.Models
 
         [Required(ErrorMessage = "* Kolićina je obavezna")]
         [Display(Name = "Kolićina")]
-        [Range(0, int.MaxValue, ErrorMessage = "* Potrebno je upisat valjanu vrijednost kolićine")]
+        [Range(0, int.MaxValue, ErrorMessage = "* Potrebno je upisati valjanu vrijednost kolićine")]
         public int Quantity { get; set; }
 
         [Required(ErrorMessage = "* Kolićina u paketu je obavezna")]
         [Display(Name = "Kol u paketu")]
-        [Range(1, int.MaxValue, ErrorMessage = "* Potrebno je upisat valjanu vrijednost komada u paketu")]
+        [Range(1, int.MaxValue, ErrorMessage = "* Potrebno je upisati valjanu vrijednost komada u paketu")]
         public int PackageSize { get; set; }
 
         [Required(ErrorMessage = "* Materijal je obavezan")]
