@@ -57,17 +57,7 @@
     {
         Plants = DbContext.Plants.ToList();
     }
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (firstRender)
-        {
-            var timer = new Timer(new TimerCallback(_ =>
-            {
-                uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
-            }), null, 5000, Timeout.Infinite);
-        }
-        
-    }
+    
     private String calculateTax(float price)
     {
         float total = price * 0.25f;

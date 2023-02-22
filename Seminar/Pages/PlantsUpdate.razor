@@ -4,6 +4,7 @@
 @using Seminar.Enums
 @using Seminar.Models
 @inject ApplicationDbContext DbContext
+@inject NavigationManager UriHelper
 
 <h2>Ažuriranje biljaka</h2>
 <h3 class="message">@Message</h3>
@@ -84,12 +85,7 @@
 
 <br />
 <br />
-<a href="/plants/list">Natrag na listu biljaka</a>
-<br />
-<br />
-<span>* Poznati bug ukoliko promijenite vrijednost ili unesete nevaljanu vrijednost te napustite stranicu.
-    Aplikacija će ju privremeno prkazati na ispisu liste, ali će se nakon par sekundi prikazati ispravna. 
-    Hvala na razumijevanju.</span>
+<button @onclick="OnNavClick" class="btn btn-success">Natrag na listu biljaka</button>
 
 
 @code {
@@ -109,5 +105,11 @@
         DbContext.Plants.Update(PlantModel);
         DbContext.SaveChanges();
         Message = "Biljka uspješno ažurirana";
+    }
+    private void OnNavClick()
+    {
+        
+        UriHelper.NavigateTo($"/plants/list", forceLoad:true);
+        
     }
 }
